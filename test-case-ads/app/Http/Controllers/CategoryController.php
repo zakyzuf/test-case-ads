@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -18,7 +20,7 @@ class CategoryController extends Controller
         return CategoryResource::collection($categories);
     }
 
-    public function sorted()
+    public function sorted(Category $categories)
     {
         $categories = Category::withCount('products')->orderByDesc('products_count')->get();
         return CategoryResource::collection($categories);
